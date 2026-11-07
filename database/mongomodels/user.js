@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/doitdb',{ useNewUrlParser: true });
+
 var passportLocalMongoose = require('passport-local-mongoose');
 var UserSchema = new mongoose.Schema({
     password:String,

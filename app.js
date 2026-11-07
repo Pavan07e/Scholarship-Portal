@@ -1,4 +1,5 @@
 const express    = require('express'),
+      mongoose = require('mongoose'),
       app        = express(),
       morgan     = require('morgan'),
       passport   = require('passport'),
@@ -28,6 +29,10 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next) {
+    res.locals.CurrentUser = req.user || null;
+    next();
+});
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -199,6 +204,8 @@ app.post("/uploaddata",sq.insert);
 
 
 
-app.listen(process.env.PORT,process.env.IP,function(req,res){
-    console.log("server started");
+const PORT = 8080;
+
+app.listen(PORT, function () {
+    console.log(`Server started at http://localhost:${PORT}`);
 });
